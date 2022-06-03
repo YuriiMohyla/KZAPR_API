@@ -14,14 +14,12 @@ import java.util.List;
 @Table(name = "user", schema = "public")
 public class User {
 
-    @Id                     //Primary Key
+    @Id
     @Column(name = "user_id")
     private Long id;
 
-    @NotBlank               //@NotBlank должно быть не нулевым , а обрезанная длина должна быть больше нуля
     private String email;
 
-    @NotBlank
     private String password;
 
     private Timestamp created_at;
@@ -30,9 +28,9 @@ public class User {
 
     private Boolean google;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "user_id")
-    private List<Profile> profileList;
+    private Profile profile;
 
     @OneToMany
     @JoinColumn(name = "user_id")

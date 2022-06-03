@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +26,6 @@ public class Status {
     @NotBlank
     private String status_type;
 
-    @OneToMany
-    @JoinColumn(name = "status_id")
-    private List<Task> taskList;
+    @OneToMany(mappedBy = "status")
+    private List<Contract> contracts;
 }

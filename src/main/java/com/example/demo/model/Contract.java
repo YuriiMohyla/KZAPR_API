@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,29 +15,28 @@ import java.sql.Timestamp;
 public class Contract {
     @Id
     @GeneratedValue
-    private Integer contract_id;
+    private Long contract_id;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
-    private Timestamp created_at;
-
-    @NotBlank
     private Timestamp time_start;
 
-    @NotBlank
     private Timestamp time_end;
 
-    @NotBlank
     private String description;
 
+    private String image;
+
     @ManyToOne
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "customer_id")
     private Profile customer;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private Profile companyOwner;
+    @JoinColumn(name = "owner_id")
+    private Profile owner;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 
 }

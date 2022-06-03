@@ -36,4 +36,8 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Task> taskList;
 
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
 }

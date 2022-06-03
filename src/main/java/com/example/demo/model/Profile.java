@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +30,9 @@ public class Profile {
     @NotBlank
     private Date birthday;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Contract> customerContracts;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Contract> ownersContracts;
 }
