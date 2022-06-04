@@ -17,6 +17,15 @@ public class ContractResponseDto {
     @ToString
     public static class ContractDataDTO {
         private Long id;
-        private Long status;
+        private Stat status;
+
+        @AllArgsConstructor
+        @Getter
+        @ToString
+        public static class Stat {
+            private Long statusId;
+            private String name;
+            private String color;
+        }
     }
 }

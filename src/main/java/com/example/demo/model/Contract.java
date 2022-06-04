@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -39,4 +40,6 @@ public class Contract {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @OneToMany(mappedBy = "contract")
+    private List<Project> projects;
 }

@@ -40,4 +40,8 @@ public class Project {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
 }

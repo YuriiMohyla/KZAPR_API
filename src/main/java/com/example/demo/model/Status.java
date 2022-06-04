@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,14 +18,11 @@ public class Status {
     @GeneratedValue
     private Long status_id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String color;
 
-    @NotBlank
-    private String status_type;
+    private String status;
 
     @OneToMany(mappedBy = "status")
     private List<Contract> contracts;

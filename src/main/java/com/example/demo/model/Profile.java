@@ -35,4 +35,6 @@ public class Profile {
 
     @OneToMany(mappedBy = "owner")
     private List<Contract> ownersContracts;
+
+
 }
