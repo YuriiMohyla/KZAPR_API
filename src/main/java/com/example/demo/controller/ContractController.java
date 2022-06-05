@@ -2,10 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.model.Contract;
-import com.example.demo.repository.*;
+import com.example.demo.repository.ContractRepository;
+import com.example.demo.repository.ProfileRepository;
+import com.example.demo.repository.ProjectRepository;
+import com.example.demo.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
 @RestController
 public class ContractController {
@@ -56,6 +60,7 @@ public class ContractController {
         return new ListProjectsOfContractDto("projects for the contract",
                 ListProjectsOfContractDto.toDataList(projectRepository.getProjectsByContract(contract_id)),true);
     }
+
     @PostMapping("/contract")
     public ContractResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
         Contract contract = contractRequestDto.toContract();

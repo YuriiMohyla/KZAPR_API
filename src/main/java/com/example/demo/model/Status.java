@@ -26,4 +26,17 @@ public class Status {
 
     @OneToMany(mappedBy = "status")
     private List<Contract> contracts;
+
+    @OneToMany(mappedBy = "status")
+    private List<Task> tasks;
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "status_id=" + status_id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

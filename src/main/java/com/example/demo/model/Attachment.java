@@ -23,4 +23,12 @@ public class Attachment {
     @NotBlank
     private String type;
 
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "attachment_id=" + attachment_id +
+                ", link='" + link + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

@@ -50,3 +50,16 @@ public class ContractRequestDto {
     }
 
 }
+
+/*
+* {
+    "title" : "f",
+    "description" : "f",
+    "time_start" : 100000000,
+    "time_end" : 1000000000,
+    "customerId" : 1,
+    "companyOwnerId" : 2,
+    "documents" : "a",
+    "image" : "a",
+    "status_id" : 2
+}*/

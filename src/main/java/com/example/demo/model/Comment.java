@@ -19,16 +19,16 @@ public class Comment {
     @GeneratedValue
     private Long comment_id;
 
-    @NotBlank
+
     private String text;
 
-    @NotBlank
+
     private Timestamp created_at;
 
-    @NotBlank
+
     private Timestamp edited_at;
 
-    @NotBlank
+
     private String type;
 
 
