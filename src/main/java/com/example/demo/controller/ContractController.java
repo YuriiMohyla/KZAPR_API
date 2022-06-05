@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.model.Contract;
-import com.example.demo.repository.ContractRepository;
-import com.example.demo.repository.ProfileRepository;
-import com.example.demo.repository.ProjectRepository;
-import com.example.demo.repository.StatusRepository;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +59,7 @@ public class ContractController {
     }
 
     @PostMapping("/contract")
-    public ContractResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
+    public ResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
         Contract contract = contractRequestDto.toContract();
         if (contractRequestDto.getCustomerId() != null)
             profileRepository.findById(contractRequestDto.getCustomerId()).ifPresent(contract::setCustomer);
@@ -71,9 +68,9 @@ public class ContractController {
         if (contractRequestDto.getStatus_id() != null)
             statusRepository.findById(contractRequestDto.getStatus_id()).ifPresent(contract::setStatus);
         contractRepository.save(contract);
-        return new ContractResponseDto("contract create", true,
-                new ContractResponseDto.ContractDataDTO(contract.getContract_id(),
-                        new ContractResponseDto.ContractDataDTO.Stat(contract.getStatus().getStatus_id(),
+        return new ResponseDto("contract create", true,
+                new ResponseDto.DataDTO(contract.getContract_id(),
+                        new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
                                 contract.getStatus().getName(), contract.getStatus().getColor())));
     }
 
