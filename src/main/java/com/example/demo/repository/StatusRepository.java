@@ -11,4 +11,9 @@ import java.util.List;
 public interface StatusRepository extends JpaRepository<Status, Long> {
     @Query(value="select * from public.status a where a.status = :type", nativeQuery=true)
     List<Status> getStatusByStatus(String type);
+
+    @Query(value="select s.* from public.status s, public.task t where t.status_id=s.status_id AND t.task_id = :id", nativeQuery=true)
+    Status getStatusByTaskId(Long id);
+
 }
+

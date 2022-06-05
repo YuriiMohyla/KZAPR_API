@@ -11,4 +11,7 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value="select * from public.project a where a.contract_id = :id", nativeQuery=true)
     List<Project> getProjectsByContract(Long id);
+
+    @Query(value="select pj.* from public.project pj, public.task t where pj.project_id=t.project_id AND t.task_id = :id", nativeQuery=true)
+    Project getProjectsByTaskId(Long id);
 }

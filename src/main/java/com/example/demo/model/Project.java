@@ -34,7 +34,7 @@ public class Project {
     private String image;
 
     @OneToMany(mappedBy = "project")
-    private List<Task> taskList;
+    private List<Task> task;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
@@ -44,4 +44,15 @@ public class Project {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "project_id=" + project_id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", created_at=" + created_at +
+                ", planned_at=" + planned_at +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

@@ -18,16 +18,9 @@ public class Profile {
     @GeneratedValue
     private Long profile_id;
 
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String surname;
-
-    @NotBlank
     private String avatar;
-
-    @NotBlank
     private Date birthday;
 
     @OneToMany(mappedBy = "customer")
@@ -36,5 +29,13 @@ public class Profile {
     @OneToMany(mappedBy = "owner")
     private List<Contract> ownersContracts;
 
-
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
 }

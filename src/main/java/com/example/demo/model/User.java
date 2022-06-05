@@ -35,4 +35,16 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Notification> notificationList;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", created_at=" + created_at +
+                ", verify=" + verify +
+                ", google=" + google +
+                '}';
+    }
 }

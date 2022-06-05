@@ -7,17 +7,18 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class ContractResponseDto {
+public class ResponseDto {
+
     private String message;
     private Boolean success;
-    private ContractDataDTO data;
+    private ResponseDto.DataDTO data;
 
     @AllArgsConstructor
     @Getter
     @ToString
-    public static class ContractDataDTO {
+    public static class DataDTO {
         private Long id;
-        private Stat status;
+        private ResponseDto.DataDTO.Stat status;
 
         @AllArgsConstructor
         @Getter
@@ -28,4 +29,5 @@ public class ContractResponseDto {
             private String color;
         }
     }
+
 }

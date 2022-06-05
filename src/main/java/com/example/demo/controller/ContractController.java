@@ -43,16 +43,7 @@ public class ContractController {
     }
 
     @PostMapping("/contract")
-    public ContractResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
-/*        Contract contract = contractRequestDto.toContract();
-        profileRepository.findById(contractRequestDto.getCustomerId()).ifPresent(contract::setCustomer);
-        profileRepository.findById(contractRequestDto.getCompanyOwnerId()).ifPresent(contract::setOwner);
-        statusRepository.findById(contractRequestDto.getStatus_id()).ifPresent(contract::setStatus);
-        contractRepository.save(contract);
-        return new ContractResponseDto("contract create",true,
-                new ContractResponseDto.ContractDataDTO(contract.getContract_id(),
-                        new ContractResponseDto.ContractDataDTO.Stat(contract.getStatus().getStatus_id(),
-                                contract.getStatus().getName(),contract.getStatus().getColor())));*/
+    public ResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
         Contract contract = contractRequestDto.toContract();
         if (contractRequestDto.getCustomerId() != null)
             profileRepository.findById(contractRequestDto.getCustomerId()).ifPresent(contract::setCustomer);
@@ -61,9 +52,9 @@ public class ContractController {
         if (contractRequestDto.getStatus_id() != null)
             statusRepository.findById(contractRequestDto.getStatus_id()).ifPresent(contract::setStatus);
         contractRepository.save(contract);
-        return new ContractResponseDto("contract create", true,
-                new ContractResponseDto.ContractDataDTO(contract.getContract_id(),
-                        new ContractResponseDto.ContractDataDTO.Stat(contract.getStatus().getStatus_id(),
+        return new ResponseDto("contract create", true,
+                new ResponseDto.DataDTO(contract.getContract_id(),
+                        new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
                                 contract.getStatus().getName(), contract.getStatus().getColor())));
     }
 
