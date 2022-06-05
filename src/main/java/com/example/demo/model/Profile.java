@@ -35,6 +35,8 @@ public class Profile {
 
     @OneToMany(mappedBy = "owner")
     private List<Contract> ownersContracts;
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

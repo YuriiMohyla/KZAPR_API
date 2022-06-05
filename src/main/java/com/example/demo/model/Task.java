@@ -30,7 +30,7 @@ public class Task {
     private String color;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "task_id")
+    @JoinColumn(referencedColumnName = "task_id",name = "parent_id")
     private Task task;
 
     @ManyToOne

@@ -16,4 +16,7 @@ public class AttachmentList {
     @GeneratedValue
     private Long attachment_list_id;
 
+    @ManyToOne
+    @JoinColumn(name = "attachment_id")
+    private Attachment attachment;
 }

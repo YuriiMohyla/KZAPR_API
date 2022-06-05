@@ -10,6 +10,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@Getter
+@ToString
 public class ContractByIdResponseDto {
 
 /*    {
@@ -98,8 +101,8 @@ public class ContractByIdResponseDto {
         @Getter
         @ToString
         public static class Dates {
-            private String start;
-            private String end;
+            private Timestamp start;
+            private Timestamp end;
         }
         @AllArgsConstructor
         @Getter
