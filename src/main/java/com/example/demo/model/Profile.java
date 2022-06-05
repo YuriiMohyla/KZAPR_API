@@ -42,4 +42,9 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "profile_roles",
+            joinColumns = @JoinColumn(name = "profile_role_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Roles> roles;
 }
