@@ -53,7 +53,7 @@ public class TaskRequestDto {
     "startTime" : 100000000,
     "endTime" : 1000000000,
     "color" : "a",
-    "project_id" : 2,
-    "parent_id" : 1,
-    "status_id" : 2
+    "projectId" : 2,
+    "parentId" : 1,
+    "statusId" : 2
 }*/

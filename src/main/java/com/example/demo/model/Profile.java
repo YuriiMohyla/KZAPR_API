@@ -47,4 +47,7 @@ public class Profile {
             joinColumns = @JoinColumn(name = "profile_role_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Roles> roles;
+
+    @OneToMany(mappedBy = "profile")
+    private List<Comment> comments;
 }

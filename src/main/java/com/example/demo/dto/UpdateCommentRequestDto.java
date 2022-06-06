@@ -2,40 +2,32 @@ package com.example.demo.dto;
 
 
 import com.example.demo.model.Comment;
-import com.example.demo.model.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
 
-/*
-*Text
-DatetimeAdd
-type (COMMENT!!!!) */
-
 @AllArgsConstructor
 @Getter
 @ToString
-public class CommentRequestDto {
+public class UpdateCommentRequestDto {
 
     private String text;
-    private Timestamp datatimeAdd;
-    private String type;
+    private Timestamp dateTimeEdit ;
+
 
     public Comment toComment() {
         Comment comment = new Comment();
         comment.setText(text);
-        comment.setCreated_at(datatimeAdd);
-
-        comment.setType(type);
+        comment.setEdited_at(dateTimeEdit);
         return comment;
     }
 
 }
 
-/*{
+/*
+*{
     "text" : "f",
-    "startTime" : 100000000,
-    "type" : "comment"
+    "dateTimeEdit" : 100000000,
 }*/

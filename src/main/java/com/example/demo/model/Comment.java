@@ -16,7 +16,6 @@ import java.util.List;
 public class Comment {
 
     @Id
-    @GeneratedValue
     private Long comment_id;
 
 
@@ -31,5 +30,12 @@ public class Comment {
 
     private String type;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Profile profile;
+
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -15,6 +16,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 /*    User findByLoginAndPassword(String Login,String Password);
 
     User findByLogin(String login);*/
+
+    /*@Query(value="Update public.task SET description = :description, title = :title, time_start = :time_start, time_end = :time_end, color = :color, project_id = :project_id, status_id = :status_id, parent_id = :parent_id where task_id = :id", nativeQuery=true)
+    void updateTask(Long id, String description, String title, Timestamp time_start, Timestamp time_end, String color, Long project_id, Long status_id, Long parent_id);*/
 
     @Query(value="select t.* from public.task t where t.task_id = :id", nativeQuery=true)
     Task getTaskByTaskId(Long id);

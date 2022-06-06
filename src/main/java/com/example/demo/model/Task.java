@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
@@ -40,6 +41,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @OneToMany(mappedBy = "task")
+    private List<Comment> comments;
 
     @Override
     public String toString() {

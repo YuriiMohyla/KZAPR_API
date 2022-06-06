@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.*;
+import com.example.demo.exeption.IdNotFoundExeption;
+import com.example.demo.exeption.UserNotFoundException;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,34 @@ public class TaskController {
                 new ResponseDto.DataDTO(task.getTask_id(),
                         new ResponseDto.DataDTO.Stat(task.getStatus().getStatus_id(),
                                 task.getStatus().getName(), task.getStatus().getColor())));
+    }
+
+    @PutMapping("/task/{taskId}")
+    public ResponseDto updateTask(@RequestBody TaskRequestDto taskRequestDto, @PathVariable(value = "taskId") Long taskId) {
+        try {
+            Task task = taskRepository.findById(taskId).get();
+            task.setTitle(taskRequestDto.getTitle());
+            task.setDescription(taskRequestDto.getDescription());
+            task.setTime_start(taskRequestDto.getStartTime());
+            task.setTime_end(taskRequestDto.getEndTime());
+            task.setColor(taskRequestDto.getColor());
+            if (taskRequestDto.getProjectId() != null)
+                projectRepository.findById(taskRequestDto.getProjectId()).ifPresent(task::setProject);
+            if (taskRequestDto.getParentId() != null)
+                taskRepository.findById(taskRequestDto.getParentId()).ifPresent(task::setTask);
+            if (taskRequestDto.getStatusId() != null)
+                statusRepository.findById(taskRequestDto.getStatusId()).ifPresent(task::setStatus);
+            taskRepository.save(task);
+            return new ResponseDto("task updated", true, null);
+        } catch (RuntimeException e){
+            return new ResponseDto("record not found by id", false, null);
+        }
+    }
+
+    @DeleteMapping("/task/{taskId}")
+    public ResponseDto deleteTask(@PathVariable(value = "taskId") Long taskId){
+        taskRepository.deleteById(taskId);
+        return new ResponseDto("task deleted", true, null);
     }
 
     @GetMapping("/task/{taskId}/comments")
