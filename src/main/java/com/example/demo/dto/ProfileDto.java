@@ -30,8 +30,9 @@ public class ProfileDto {
         private String email;
         private List<String> position;
         private Date birthday;
+        private ProjectManager pm;
 
-        private static ProfileData fromProfile(Profile profile) {
+        private static ProfileData fromProfile(Profile profile, Profile projectManager) {
             ProfileData profileData = new ProfileData();
             profileData.setProfileId(profile.getProfile_id());
             profileData.setName(profile.getName());
@@ -41,21 +42,34 @@ public class ProfileDto {
             profileData.setBirthday(profile.getBirthday());
             profileData.setPosition(profile.getRoles().stream().map(Roles::getName).collect(Collectors.toList()));
             profileData.setAboutMe(profile.getRoles().stream().map(Roles::getDescription).collect(Collectors.joining(", ")));
+            profileData.setPm(ProjectManager.fromProfile(projectManager));
 
             return profileData;
         }
     }
 
-    // TODO: find out where you can get the project manager
+    @Setter
+    @Getter
     private static class ProjectManager {
         private long profileId;
         private String name;
         private String surname;
         private String email;
+
+        private static ProjectManager fromProfile(Profile profile) {
+            ProjectManager projectManager = new ProjectManager();
+            projectManager.setProfileId(profile.getProfile_id());
+            projectManager.setName(profile.getName());
+            projectManager.setSurname(profile.getSurname());
+            projectManager.setEmail(profile.getUser().getEmail());
+
+            return projectManager;
+        }
     }
 
-    public static ProfileDto fromProfile(Profile profile) {
-        ProfileData profileData = ProfileData.fromProfile(profile);
+    public static ProfileDto fromProfile(Profile profile, Profile projectManager) {
+        ProfileData profileData = ProfileData.fromProfile(profile, projectManager);
+
         return new ProfileDto(profileData);
     }
 

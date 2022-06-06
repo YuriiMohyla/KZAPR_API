@@ -44,6 +44,10 @@ public class Project {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
+    @OneToMany
+    @JoinColumn(name = "project_id")
+    private List<ProjectStaff> projectStaff;
+
     @Override
     public String toString() {
         return "Project{" +

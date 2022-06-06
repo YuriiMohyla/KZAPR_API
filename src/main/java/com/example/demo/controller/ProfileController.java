@@ -16,8 +16,9 @@ public class ProfileController {
 
     @GetMapping("/profile/{profileId}")
     public ProfileDto getProfileInformation(@PathVariable long profileId) {
-        Profile profile = profileRepository.getById(profileId);
+        Profile profile = profileRepository.findById(profileId).get();
+        Profile projectManager = profileRepository.getProjectManagerByProfileId(profile.getProfile_id());
 
-        return ProfileDto.fromProfile(profile);
+        return ProfileDto.fromProfile(profile, projectManager);
     }
 }
