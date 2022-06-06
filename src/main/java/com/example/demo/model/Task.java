@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "task", schema = "public")
+@Table(name = "task")
 public class Task {
 
     @Id

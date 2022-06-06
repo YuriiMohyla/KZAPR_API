@@ -25,6 +25,9 @@ public class Attachment {
     @NotBlank
     private String type;
 
+    @OneToMany(mappedBy = "attachment")
+    private List<AttachmentList> attachmentLists;
+
     @Override
     public String toString() {
         return "Attachment{" +

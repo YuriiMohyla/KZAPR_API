@@ -28,15 +28,33 @@ public class UploadController {
     //Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "C://temp//";
 
-    @GetMapping("/")
-    public String index() {
-        return "upload";
+
+    @DeleteMapping("/task/{taskId}/attachment/{attachmentId}")
+    public String deleteAttachment(@PathVariable long taskId, @PathVariable long attachmentId){
+        if (taskRepository.findById(taskId).isPresent() && attachmentRepository.findById(attachmentId).isPresent()){
+            try {
+                Files.delete(Paths.get(attachmentRepository.getById(attachmentId).getLink()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            attachmentRepository.deleteById(attachmentId);
+            return "{\n" +
+                    "    \"message\": \"Task file attachment deleted\",\n" +
+                    "    \"data\": {\n" +
+                    "         id: "+ attachmentId +",\n" +
+                    "     },\n" +
+                    "    \"success\": true,\n" +
+                    "}";
+        }
+        return "{\n" +
+                "    \"message\": \"Task or attachment not found\",\n" +
+                "    \"success\": false,\n" +
+                "}";
     }
 
     @PostMapping("/task/{taskId}/attachment")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes,@PathVariable long taskId) {
-
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:uploadStatus";
@@ -59,19 +77,21 @@ public class UploadController {
             attachmentList.setAttachment(attachment);
             attachmentList.setTask(taskRepository.getById(taskId));
             attachmentListRepository.save(attachmentList);
+            String successString = "{\n" +
+                    "    \"message\": \"Task attachment added\",\n" +
+                    "    \"data\": {\n" +
+                    "         link: "+ path.toString() +",\n" +
+                    "         id: "+ attachment.getAttachment_id() +",\n" +
+                    "    },\n" +
+                    "    \"success\": true,\n" +
+                    "}";
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
+            return successString;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "redirect:/uploadStatus";
+        return "redirect:uploadStatus";
     }
-
-    @GetMapping("/uploadStatus")
-    public String uploadStatus() {
-        return "uploadStatus";
-    }
-
 }
