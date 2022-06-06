@@ -82,7 +82,29 @@ public class ContractController {
                         new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
                                 contract.getStatus().getName(), contract.getStatus().getColor())));
     }
+    @PutMapping("/contract/{contractId}")
+    public ResponseDto changeContract(@RequestBody ContractRequestDto contractRequestDto,@PathVariable(value = "contractId") Long contract_id) {
+        if (!contractRepository.findById(contract_id).isPresent()) {
+            return new ResponseDto("Contract with id" + contract_id + "not found",false, new ResponseDto.DataDTO());
+        }
+        Contract contract = contractRepository.getById(contract_id);
+        contract.setTitle(contractRequestDto.getTitle());
+        contract.setImage(contractRequestDto.getImage());
+        contract.setTime_start(contractRequestDto.getTime_start());
+        contract.setTime_end(contractRequestDto.getTime_end());
 
+        if (contractRequestDto.getCustomerId() != null)
+            profileRepository.findById(contractRequestDto.getCustomerId()).ifPresent(contract::setCustomer);
+        if (contractRequestDto.getCompanyOwnerId() != null)
+            profileRepository.findById(contractRequestDto.getCompanyOwnerId()).ifPresent(contract::setOwner);
+        if (contractRequestDto.getStatus_id() != null)
+            statusRepository.findById(contractRequestDto.getStatus_id()).ifPresent(contract::setStatus);
+        contractRepository.save(contract);
+        return new ResponseDto("change contract", true,
+                new ResponseDto.DataDTO(contract.getContract_id(),
+                        new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
+                                contract.getStatus().getName(), contract.getStatus().getColor())));
+    }
 
     @GetMapping("/amount-of-the-complited-tasks")
     public TaskPerWeekDto getTasksPerWeek() {
@@ -104,7 +126,6 @@ public class ContractController {
 
             taskPerWeek.add(new TaskPerWeekDto.TaskPerWeek(dayOfWeek.name(), (int) count));
         }
-
         return new TaskPerWeekDto(taskPerWeek);
     }
 }

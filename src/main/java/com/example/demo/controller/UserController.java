@@ -1,24 +1,25 @@
 package com.example.demo.controller;
 
-import com.example.demo.exeption.UserNotFoundException;
-import com.example.demo.model.Project;
+import com.example.demo.dto.UserResponseDto;
 import com.example.demo.model.User;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
+
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ProfileRepository profileRepository;
 
     @GetMapping("/admin/users")
-    public List getAllNotes() {
-        return userRepository.findAll();
+    public UserResponseDto getAllUsers() {
+        return new UserResponseDto("get all users",UserResponseDto.fromProfileList(profileRepository.findAll()),true);
     }
 
     @PostMapping("/user")

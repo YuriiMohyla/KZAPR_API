@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
@@ -16,6 +17,7 @@ public class ResponseDto {
     @AllArgsConstructor
     @Getter
     @ToString
+    @NoArgsConstructor
     public static class DataDTO {
         private Long id;
         private ResponseDto.DataDTO.Stat status;
