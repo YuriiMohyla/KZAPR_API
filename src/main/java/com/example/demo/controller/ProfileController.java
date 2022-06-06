@@ -14,12 +14,10 @@ public class ProfileController {
 
     private final ProfileRepository profileRepository;
 
-/*    @GetMapping("/profile/{profileId}")
+    @GetMapping("/profile/{profileId}")
     public ProfileDto getProfileInformation(@PathVariable long profileId) {
-        Profile profile = profileRepository.findById(profileId).orElseThrow(() -> {
-            throw new RuntimeException("Profile is not found");
-        });
+        Profile profile = profileRepository.getById(profileId);
 
         return ProfileDto.fromProfile(profile);
-    }*/
+    }
 }

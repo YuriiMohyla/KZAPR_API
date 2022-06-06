@@ -1,10 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Attachment;
+import com.example.demo.model.AttachmentList;
+import com.example.demo.repository.AttachmentListRepository;
+import com.example.demo.repository.AttachmentRepository;
+import com.example.demo.repository.ContractRepository;
+import com.example.demo.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -15,7 +19,12 @@ import java.nio.file.Paths;
 
 @RestController
 public class UploadController {
-
+    @Autowired
+    private AttachmentRepository attachmentRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
+    private AttachmentListRepository attachmentListRepository;
     //Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "C://temp//";
 
@@ -24,9 +33,9 @@ public class UploadController {
         return "upload";
     }
 
-    @PostMapping("/upload") // //new annotation since 4.3
+    @PostMapping("/task/{taskId}/attachment")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes,@PathVariable long taskId) {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
@@ -34,12 +43,22 @@ public class UploadController {
         }
 
         try {
-
+            if (!taskRepository.findById(taskId).isPresent()) return "{\n" +
+                    "    \"message\": \"Task not found\",\n" +
+                    "    \"success\": false,\n" +
+                    "}";
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-
+            Attachment attachment = new Attachment();
+            attachment.setLink(path.toString());
+            attachment.setType("file");
+            attachmentRepository.save(attachment);
+            AttachmentList attachmentList = new AttachmentList();
+            attachmentList.setAttachment(attachment);
+            attachmentList.setTask(taskRepository.getById(taskId));
+            attachmentListRepository.save(attachmentList);
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
