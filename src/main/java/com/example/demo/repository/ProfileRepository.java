@@ -25,6 +25,21 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     @Query(value="select pf.* from public.profile pf, public.task t, public.project_staff ps, public.project pj  where pf.profile_id=ps.profile_id AND ps.project_id=pj.project_id AND pj.project_id=t.project_id AND t.task_id = :id", nativeQuery=true)
     Profile getProfileByTaskId(Long id);
 
+    @Query(value = "with recursive project_manager as (" +
+            "    select ps.profile_id, ps.projectstaff_id, ps.chief_id" +
+            "    from public.profile_roles pr" +
+            "             join public.project_staff ps on pr.profile_role_id = ps.profile_id" +
+            "    where pr.profile_id = ?1" +
+            "    union" +
+            "    select pr.profile_role_id, ps.projectstaff_id, ps.chief_id" +
+            "    from public.project_staff ps" +
+            "    join project_manager pm on pm.chief_id = ps.projectstaff_id" +
+            "    join public.profile_roles pr on pr.profile_role_id = ps.profile_id" +
+            ")" +
+            "select p.* from public.profile_roles pr" +
+            "         join public.profile p on pr.profile_id = p.profile_id " +
+            "where pr.profile_role_id = (select project_manager.profile_id from project_manager order by projectstaff_id limit 1)", nativeQuery = true)
+    Profile getProjectManagerByProfileId(long profileId);
 }
 
 

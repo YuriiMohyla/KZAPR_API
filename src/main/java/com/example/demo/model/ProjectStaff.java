@@ -13,6 +13,10 @@ public class ProjectStaff {
 
     @Id
     @GeneratedValue
-    private Long projectstaff_id;
+    @Column(name = "projectstaff_id")
+    private Long id;
 
+    @OneToOne
+    @JoinColumn(referencedColumnName = "projectstaff_id", name = "chief_id")
+    private ProjectStaff projectStaff;
 }
