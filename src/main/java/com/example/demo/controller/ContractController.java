@@ -30,6 +30,7 @@ public class ContractController {
     @Autowired
     private final TaskRepository taskRepository;
 
+    //Get information about the contract by ID
     @GetMapping("/contract/{id}")
     public ContractByIdResponseDto getContractById(@PathVariable(value = "id") Long contract_id) {
         Contract contract = contractRepository.getById(contract_id);
@@ -66,7 +67,7 @@ public class ContractController {
         return new ListProjectsOfContractDto("projects for the contract",
                 ListProjectsOfContractDto.toDataList(projectRepository.getProjectsByContract(contract_id)), true);
     }
-
+    //Creating the contract
     @PostMapping("/contract")
     public ResponseDto createNote(@RequestBody ContractRequestDto contractRequestDto) {
         Contract contract = contractRequestDto.toContract();
@@ -82,6 +83,7 @@ public class ContractController {
                         new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
                                 contract.getStatus().getName(), contract.getStatus().getColor())));
     }
+    //Change the contract information by ID
     @PutMapping("/contract/{contractId}")
     public ResponseDto changeContract(@RequestBody ContractRequestDto contractRequestDto,@PathVariable(value = "contractId") Long contract_id) {
         if (!contractRepository.findById(contract_id).isPresent()) {
@@ -105,7 +107,7 @@ public class ContractController {
                         new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
                                 contract.getStatus().getName(), contract.getStatus().getColor())));
     }
-
+    //Get the completed task per the day of the week
     @GetMapping("/amount-of-the-complited-tasks")
     public TaskPerWeekDto getTasksPerWeek() {
         final LocalDate currentWeek = LocalDate.now().minusDays(7);
