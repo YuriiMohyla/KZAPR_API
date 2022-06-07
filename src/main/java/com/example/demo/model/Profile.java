@@ -32,12 +32,14 @@ public class Profile {
     @Override
     public String toString() {
         return "Profile{" +
-                "name='" + name + '\'' +
+                "profile_id=" + profile_id +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", birthday=" + birthday +
                 '}';
     }
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -50,4 +52,7 @@ public class Profile {
 
     @OneToMany(mappedBy = "profile")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "profile")
+    private List<NotificationList> notificationLists;
 }

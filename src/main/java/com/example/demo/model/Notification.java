@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,9 @@ public class Notification {
 
     @NotBlank
     private char priority;
+
+    @OneToMany(mappedBy = "notification")
+    private List<NotificationList> notificationLists;
 
 /*    @OneToMany
     @JoinColumn(name = "permission_id")

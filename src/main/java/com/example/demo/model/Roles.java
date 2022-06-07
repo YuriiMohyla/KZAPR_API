@@ -16,10 +16,7 @@ public class Roles {
     @GeneratedValue
     private Long role_id;
 
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String description;
 
     @OneToMany

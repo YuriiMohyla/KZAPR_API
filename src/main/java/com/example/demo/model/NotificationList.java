@@ -3,10 +3,7 @@ package com.example.demo.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -21,5 +18,13 @@ public class NotificationList {
 
     @NotBlank
     private boolean read;
+
+    @ManyToOne
+    @JoinColumn(name = "notification_id")
+    private Notification notification;
+
+    @ManyToOne
+    @JoinColumn(name = "recipient_id")
+    private Profile profile;
 
 }
