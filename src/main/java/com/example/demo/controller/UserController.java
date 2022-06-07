@@ -18,7 +18,7 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     ProfileRepository profileRepository;
-
+    //Get all users
     @GetMapping("/admin/users")
     public UserResponseDto getAllUsers() {
         return new UserResponseDto("get all users", UserResponseDto.fromProfileList(profileRepository.findAll()), true);
@@ -29,11 +29,12 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    //Get One user info
     @GetMapping("/admin/users/{id}")
     public ProfileDto getUserById(@PathVariable(value = "id") Long user_id) {
         return new ProfileDto(ProfileDto.fromUser(userRepository.getById(user_id)));
     }
-
+    //Delete user
     @DeleteMapping("/admin/users/{id}")
     public ResponseEntity deletUserById(@PathVariable(value = "id") Long user_id) {
         if (userRepository.findById(user_id).isPresent()) {

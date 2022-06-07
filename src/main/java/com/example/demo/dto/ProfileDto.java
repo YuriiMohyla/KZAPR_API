@@ -62,7 +62,6 @@ public class ProfileDto {
             projectManager.setName(profile.getName());
             projectManager.setSurname(profile.getSurname());
             projectManager.setEmail(profile.getUser().getEmail());
-
             return projectManager;
         }
     }
