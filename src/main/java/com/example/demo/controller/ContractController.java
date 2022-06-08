@@ -5,6 +5,8 @@ import com.example.demo.model.Contract;
 import com.example.demo.model.Task;
 import com.example.demo.repository.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RestController
 @AllArgsConstructor
 public class ContractController {
@@ -29,7 +32,6 @@ public class ContractController {
     private final AttachmentListRepository attachmentListRepository;
     @Autowired
     private final TaskRepository taskRepository;
-
     //Get information about the contract by ID
     @GetMapping("/contract/{id}")
     public ContractByIdResponseDto getContractById(@PathVariable(value = "id") Long contract_id) {
@@ -78,6 +80,7 @@ public class ContractController {
         if (contractRequestDto.getStatus_id() != null)
             statusRepository.findById(contractRequestDto.getStatus_id()).ifPresent(contract::setStatus);
         contractRepository.save(contract);
+        log.info("Contract was saved: {}",contract);
         return new ResponseDto("contract create", true,
                 new ResponseDto.DataDTO(contract.getContract_id(),
                         new ResponseDto.DataDTO.Stat(contract.getStatus().getStatus_id(),
