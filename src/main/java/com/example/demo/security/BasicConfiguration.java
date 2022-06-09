@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class BasicConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -30,10 +31,14 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/").access("hasRole('USER')")
+                .antMatchers("/profile/**", "/admin/**", "/contracts", "/contract/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
                 .httpBasic();
-        http.csrf().disable();
+        //http.csrf().disable();
     }
 }
