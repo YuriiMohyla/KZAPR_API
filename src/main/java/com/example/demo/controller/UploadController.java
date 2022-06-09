@@ -27,8 +27,8 @@ public class UploadController {
     @Autowired
     private ContractRepository contractRepository;
     //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "C://temp//";
-
+    private static String UPLOADED_FOLDER = "/home/ubuntu/kzaprResourse/";
+    //private static String UPLOADED_FOLDER = "C://temp//";
     //Delete attachments of the task
     @DeleteMapping("/task/{taskId}/attachment/{attachmentId}")
     public String deleteAttachment(@PathVariable long taskId, @PathVariable long attachmentId){
@@ -53,7 +53,7 @@ public class UploadController {
                 "}";
     }
     //Delete attachments of the project
-    @DeleteMapping("/task/{project_id}/attachment/{attachmentId}")
+    @DeleteMapping("/project/{project_id}/attachment/{attachmentId}")
     public String deleteAttachmentOfTheProject(@PathVariable long project_id, @PathVariable long attachmentId){
         if (projectRepository.findById(project_id).isPresent() && attachmentRepository.findById(attachmentId).isPresent()){
             try {
@@ -76,7 +76,7 @@ public class UploadController {
                 "}";
     }
     //Delete attachments of the contract
-    @DeleteMapping("/task/{contractId}/attachment/{attachmentId}")
+    @DeleteMapping("/contract/{contractId}/attachment/{attachmentId}")
     public String deleteAttachmentOfTheContract(@PathVariable long contractId, @PathVariable long attachmentId){
         if (contractRepository.findById(contractId).isPresent() && attachmentRepository.findById(attachmentId).isPresent()){
             try {
@@ -101,7 +101,7 @@ public class UploadController {
 
     //Add new attachment to the task
     @PostMapping("/task/{taskId}/attachment")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,
+    public String singleFileUpload(@PathVariable("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes,@PathVariable long taskId) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
@@ -142,8 +142,8 @@ public class UploadController {
         return "redirect:uploadStatus";
     }
     //Add new attachment to the project
-    @PostMapping("/task/{projectId}/attachment")
-    public String attachmentToTheProject(@RequestParam("file") MultipartFile file,
+    @PostMapping("/project/{projectId}/attachment")
+    public String attachmentToTheProject(@PathVariable("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes,@PathVariable long projectId) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
@@ -182,8 +182,8 @@ public class UploadController {
         return "redirect:uploadStatus";
     }
     //Add new attachment to the contract
-    @PostMapping("/task/{contractId}/attachment")
-    public String attachmentToTheContract(@RequestParam("file") MultipartFile file,
+    @PostMapping("/contract/{contractId}/attachment")
+    public String attachmentToTheContract(@PathVariable("file") MultipartFile file,
                                          RedirectAttributes redirectAttributes,@PathVariable long contractId) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
