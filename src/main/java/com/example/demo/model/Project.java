@@ -18,19 +18,16 @@ public class Project {
     @GeneratedValue
     private Long project_id;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String description;
 
-    @NotBlank
+    @Column(name = "time_start")
     private Timestamp created_at;
 
-    @NotBlank
+    @Column(name = "time_end")
     private Timestamp planned_at;
 
-    @NotBlank
     private String image;
 
     @OneToMany(mappedBy = "project")

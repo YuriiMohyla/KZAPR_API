@@ -20,6 +20,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -44,16 +46,18 @@ public class TaskRequestDto {
         task.setColor(color);
         return task;
     }
+    public static List<TaskRequestDto> toTaskList(List<Task> taskList){
+        List<TaskRequestDto> returnList = new ArrayList<>();
 
+        for (Task task:taskList) {
+            if (task.getTask() == null) returnList.add(new TaskRequestDto(
+                    task.getTitle(),task.getDescription(),task.getTime_start(),task.getTime_end(),
+                    task.getColor(),task.getProject().getProject_id(), 0L,task.getStatus().getStatus_id()));
+                else
+            returnList.add(new TaskRequestDto(
+                    task.getTitle(),task.getDescription(),task.getTime_start(),task.getTime_end(),
+                    task.getColor(),task.getProject().getProject_id(),task.getTask().getTask_id(),task.getStatus().getStatus_id()));
+        }
+        return returnList;
+    }
 }
-
-/*{
-    "title" : "f",
-    "description" : "f",
-    "startTime" : 100000000,
-    "endTime" : 1000000000,
-    "color" : "a",
-    "projectId" : 2,
-    "parentId" : 1,
-    "statusId" : 2
-}*/

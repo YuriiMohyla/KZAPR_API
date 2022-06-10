@@ -24,6 +24,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Task getTaskByTaskId(Long id);
 
     List<Task> getTasksByStatusName(String statusName);
+
+    @Query(value="select * from public.task", nativeQuery=true)
+    List<Task> getTaskList();
 }
 
 /*select s.*, pj.*, pf.*, u.*, a.*, t.*

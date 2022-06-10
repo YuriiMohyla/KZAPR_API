@@ -37,8 +37,8 @@ public class TaskController {
 
     // Получить все записи
     @GetMapping("/task")
-    public List getAllNotes() {
-        return taskRepository.findAll();
+    public List<TaskRequestDto> getAllNotes() {
+        return TaskRequestDto.toTaskList(taskRepository.getTaskList());
     }
 
     @PostMapping("/task")
@@ -75,7 +75,7 @@ public class TaskController {
             taskRepository.save(task);
             return new ResponseDto("task updated", true, null);
         } catch (RuntimeException e){
-            return new ResponseDto("record not found by id", false, null);
+            return new ResponseDto("data enterned incorrectly", false, null);
         }
     }
 

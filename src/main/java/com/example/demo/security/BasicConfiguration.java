@@ -30,15 +30,12 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/").access("hasRole('USER')")
-                .antMatchers("/profile/**", "/admin/**", "/contracts", "/contract/**").hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .exceptionHandling().accessDeniedPage("/403")
+                .antMatchers("/admin/**","/contracts","/contract").hasRole("ADMIN")
+                .antMatchers("/task/**","/task","/project/**","/contract/**","/contract").hasRole("USER")
                 .and()
                 .httpBasic();
-        //http.csrf().disable();
     }
 }
